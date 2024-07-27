@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -40,7 +41,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="192dp"
-                android:text="We are a group of Cummins college students behind this lost and found app. Our goal is to simplify the process of finding and returning lost items within our school community, promoting a sense of responsibility and unity."
+                android:text="We are a group of Gangamai college students behind this lost and found app. Our goal is to simplify the process of finding and returning lost items within our school community, promoting a sense of responsibility and unity."
                 android:textAlignment="viewStart"
                 android:textColor="#575252"
                 android:textSize="20sp"

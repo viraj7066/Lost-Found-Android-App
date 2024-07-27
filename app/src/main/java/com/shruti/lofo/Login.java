@@ -16,6 +16,11 @@ public class Login extends AppCompatActivity {
     EditText loginEmail, loginPassword;
     Button loginButton;
     TextView signupRedirectText;
+
+    // Declare dummy email and password here
+    public static final String dummyUserEmail = "akshay@gmail.com";
+    public static final String dummyUserPassword = "akshay@123";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +40,18 @@ public class Login extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!validateEmail() | !validatePassword()) {
+                if (!validateEmail() || !validatePassword()) {
                     Toast.makeText(Login.this, "Enter data in all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     checkUser();
                 }
             }
         });
+
         signupRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +60,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
     public Boolean validateEmail() {
         String val = loginEmail.getText().toString();
         if (val.isEmpty()) {
@@ -63,6 +71,7 @@ public class Login extends AppCompatActivity {
             return true;
         }
     }
+
     public Boolean validatePassword(){
         String val = loginPassword.getText().toString();
         if (val.isEmpty()) {
@@ -78,23 +87,20 @@ public class Login extends AppCompatActivity {
         String userEmail = loginEmail.getText().toString().trim();
         String userPassword = loginPassword.getText().toString().trim();
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword(userEmail, userPassword)
-                .addOnCompleteListener(Login.this, task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(Login.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
+        if (userEmail.equals(dummyUserEmail) && userPassword.equals(dummyUserPassword)) {
+            // Dummy authentication successful
+            Toast.makeText(Login.this, "Login Successfully!", Toast.LENGTH_SHORT).show();
 
-                        // Update the shared preferences to indicate that the user is now logged in
-                        SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean("isLoggedIn", true);
-                        editor.apply();
+            // Update the shared preferences to indicate that the user is now logged in
+            SharedPreferences sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("isLoggedIn", true);
+            editor.apply();
 
-                        Intent intent = new Intent(Login.this, BindingNavigation.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            Intent intent = new Intent(Login.this, BindingNavigation.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(Login.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
